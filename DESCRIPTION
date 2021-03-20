@@ -1,6 +1,6 @@
 Package: BaseSet
 Title: Working with Sets the Tidy Way
-Version: 0.0.14
+Version: 0.0.15
 Authors@R: 
     c(person(given = "Lluís",
              family = "Revilla Sancho",
@@ -21,11 +21,11 @@ License: MIT + file LICENSE
 URL: https://github.com/ropensci/BaseSet,
         https://docs.ropensci.org/BaseSet/
 BugReports: https://github.com/ropensci/BaseSet/issues
-Depends: R (>= 3.6.0)
+Depends: R (>= 4.0.0)
 Imports: dplyr (>= 1.0.0), magrittr, methods, rlang, utils
 Suggests: Biobase, covr, forcats, ggplot2, GO.db, GSEABase, knitr,
         org.Hs.eg.db, reactome.db, rmarkdown, spelling, testthat (>=
-        2.1.0), utf8 (>= 1.1.4)
+        2.1.0)
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-US
@@ -43,11 +43,11 @@ Collate: 'AllClasses.R' 'AllGenerics.R' 'GMT.R' 'GeneSetCollection.R'
         'select.R' 'set.R' 'size.R' 'subtract.R' 'tidy-set.R' 'union.R'
         'utils-pipe.R' 'zzz.R'
 NeedsCompilation: no
-Packaged: 2020-11-06 16:59:01 UTC; lluis
+Packaged: 2021-03-20 12:06:33 UTC; lluis
 Author: Lluís Revilla Sancho [aut, cre]
     (<https://orcid.org/0000-0001-9747-2570>),
   Zebulun Arendsee [rev],
   Jennifer Chang [rev]
 Maintainer: Lluís Revilla Sancho <lluis.revilla@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-11-11 13:50:28 UTC
+Date/Publication: 2021-03-20 20:10:02 UTC

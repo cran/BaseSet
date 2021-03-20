@@ -2,12 +2,13 @@
 knitr::opts_chunk$set(collapse = TRUE, 
                       warning = TRUE,
                       comment = "#>")
+run_vignette <- requireNamespace("GSEABase", quietly = TRUE) && requireNamespace("GO.db", quietly = TRUE) &&  requireNamespace("reactome.db", quietly = TRUE) &&  requireNamespace("org.Hs.eg.db", quietly = TRUE)
 
 ## ----setupr, message=FALSE----------------------------------------------------
 library("BaseSet")
 library("dplyr")
 
-## ----prepare_GO, message=FALSE------------------------------------------------
+## ----prepare_GO, message=FALSE, eval=run_vignette-----------------------------
 # We load some libraries
 library("org.Hs.eg.db")
 library("GO.db")
@@ -16,7 +17,7 @@ library("ggplot2")
 h2GO_TS <- tidySet(org.Hs.egGO)
 h2GO <- as.data.frame(org.Hs.egGO)
 
-## ----evidence_ontology--------------------------------------------------------
+## ----evidence_ontology, eval=run_vignette-------------------------------------
 library("forcats")
 h2GO %>% 
   group_by(Evidence, Ontology) %>% 
@@ -35,7 +36,7 @@ h2GO %>%
   labs(x = element_blank(), y = element_blank(),
        title = "Evidence codes for each ontology")
 
-## ----nEvidence_plot-----------------------------------------------------------
+## ----nEvidence_plot, eval=run_vignette----------------------------------------
 h2GO_TS %>% 
   relations() %>% 
   group_by(elements, sets) %>% 
@@ -50,9 +51,8 @@ h2GO_TS %>%
        subtitle = "in human") +
   scale_x_continuous(breaks = 1:7)
 
-## ----numbers------------------------------------------------------------------
+## ----numbers, eval=run_vignette-----------------------------------------------
 # Add all the genes and GO terms
-library("GO.db")
 h2GO_TS <- add_elements(h2GO_TS, keys(org.Hs.eg.db)) %>% 
   add_sets(grep("^GO:", keys(GO.db), value = TRUE))
 
@@ -66,7 +66,7 @@ sizes_set <- set_size(h2GO_TS) %>%
 sum(sizes_set$size == 0)
 sum(sizes_set$size != 0)
 
-## ----plots_GO-----------------------------------------------------------------
+## ----plots_GO, eval=run_vignette----------------------------------------------
 sizes_element %>% 
     filter(size != 0) %>% 
     ggplot() +
@@ -81,10 +81,10 @@ sizes_set %>%
     theme_minimal() +
     labs(x = "# elements per set", y = "Count")
 
-## ----distr_sizes--------------------------------------------------------------
+## ----distr_sizes, eval=run_vignette-------------------------------------------
 head(sizes_set, 10)
 
-## ----fuzzy_setup--------------------------------------------------------------
+## ----fuzzy_setup, eval=run_vignette-------------------------------------------
 nr <- h2GO_TS %>% 
   relations() %>% 
   dplyr::select(sets, Evidence) %>% 
@@ -113,7 +113,7 @@ nr <- h2GO_TS %>%
     TRUE ~ 0.01)) %>% 
   dplyr::select(sets = "sets", elements = "Evidence", fuzzy = fuzzy)
 
-## ----fuzzy_setup2-------------------------------------------------------------
+## ----fuzzy_setup2, eval=run_vignette------------------------------------------
 ts <- h2GO_TS %>% 
   relations() %>% 
   dplyr::select(-Evidence) %>% 
@@ -121,25 +121,25 @@ ts <- h2GO_TS %>%
   tidySet() %>% 
   mutate_element(Type = ifelse(grepl("^[0-9]+$", elements), "gene", "evidence"))
 
-## ----cardinality--------------------------------------------------------------
+## ----cardinality, eval=run_vignette-------------------------------------------
 ts %>% 
   dplyr::filter(Type != "Gene") %>% 
   cardinality() %>% 
   arrange(desc(cardinality)) %>% 
   head()
 
-## ----size_go------------------------------------------------------------------
+## ----size_go, eval=run_vignette-----------------------------------------------
 ts %>% 
   filter(sets %in% c("GO:0008152", "GO:0003674", "GO:0005575"),
          Type != "gene") %>% 
   set_size()
 
-## ----evidence_go--------------------------------------------------------------
+## ----evidence_go, eval=run_vignette-------------------------------------------
 ts %>% 
   filter(sets %in% c("GO:0008152", "GO:0003674", "GO:0005575")) %>% 
   filter(Type != "gene") 
 
-## ----prepare_reactome---------------------------------------------------------
+## ----prepare_reactome, eval=run_vignette--------------------------------------
 # We load some libraries
 library("reactome.db")
 
@@ -157,7 +157,7 @@ h2p_TS <- tidySet(h2p) %>%
     # Add all the genes 
     add_elements(keys(org.Hs.eg.db))
 
-## ----numbers_pathways---------------------------------------------------------
+## ----numbers_pathways, eval=run_vignette--------------------------------------
 sizes_element <- element_size(h2p_TS) %>% 
     arrange(desc(size))
 sum(sizes_element$size == 0)
@@ -166,7 +166,7 @@ sum(sizes_element$size != 0)
 sizes_set <- set_size(h2p_TS) %>% 
     arrange(desc(size))
 
-## ----pathways_plots-----------------------------------------------------------
+## ----pathways_plots, eval=run_vignette----------------------------------------
 sizes_element %>% 
     filter(size != 0) %>% 
     ggplot() +
@@ -182,7 +182,7 @@ sizes_set %>%
     theme_minimal() +
     labs(x = "# elements per set", y = "Count")
 
-## ----distr_sizes_pathways-----------------------------------------------------
+## ----distr_sizes_pathways, eval=run_vignette----------------------------------
 head(sizes_set, 10)
 
 ## ----sessionInfo, echo=FALSE--------------------------------------------------
