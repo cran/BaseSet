@@ -14,7 +14,8 @@ maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lif
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![rOpenSci](https://badges.ropensci.org/359_status.svg)](https://github.com/ropensci/software-review/issues/359)
-
+[![CRAN
+status](https://www.r-pkg.org/badges/version/BaseSet)](https://CRAN.R-project.org/package=BaseSet)
 <!-- badges: end -->
 
 # BaseSet
@@ -373,7 +374,6 @@ to match with the framework the data was obtained with.
 
 # Code of Conduct
 
-Please note that the BaseSet project is released with a [Contributor
-Code of
-Conduct](https://docs.ropensci.org/BaseSet/CODE_OF_CONDUCT.html). By
-contributing to this project, you agree to abide by its terms.
+Please note that this package is released with a [Contributor Code of
+Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
+project, you agree to abide by its terms.
