@@ -1,3 +1,8 @@
+# BaseSet 0.0.17
+
+* Fixing test when missing a package. 
+* Adding copyright holder.
+
 # BaseSet 0.0.16
 
 * Update Code of Conduct to rOpenSci template

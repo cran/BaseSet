@@ -1,10 +1,10 @@
 Package: BaseSet
 Title: Working with Sets the Tidy Way
-Version: 0.0.16
+Version: 0.0.17
 Authors@R: 
     c(person(given = "Lluís",
              family = "Revilla Sancho",
-             role = c("aut", "cre"),
+             role = c("aut", "cre", "cph"),
              email = "lluis.revilla@gmail.com",
              comment = c(ORCID = "0000-0001-9747-2570")),
       person(given = "Zebulun",
@@ -42,11 +42,11 @@ Collate: 'AllClasses.R' 'AllGenerics.R' 'GMT.R' 'GeneSetCollection.R'
         'select.R' 'set.R' 'size.R' 'subtract.R' 'tidy-set.R' 'union.R'
         'utils-pipe.R' 'zzz.R'
 NeedsCompilation: no
-Packaged: 2021-04-22 15:33:44 UTC; lluis
-Author: Lluís Revilla Sancho [aut, cre]
+Packaged: 2021-07-05 09:23:20 UTC; lluis
+Author: Lluís Revilla Sancho [aut, cre, cph]
     (<https://orcid.org/0000-0001-9747-2570>),
   Zebulun Arendsee [rev],
   Jennifer Chang [rev]
 Maintainer: Lluís Revilla Sancho <lluis.revilla@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-04-22 16:00:02 UTC
+Date/Publication: 2021-07-05 11:20:12 UTC
