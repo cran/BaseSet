@@ -25,7 +25,6 @@ getOBO <- function(x) {
     k <- vapply(kv, "[", character(1L), i = 1) # Keys
     v <- vapply(kv, "[", character(1L), i = 2) # Values
     d <- which(k == "id") # Which position indicate a beginning of description
-    tk <- vector("list", length(d))
 
     keys <- k[d[1]:length(k)]
     df <- data.frame(matrix(ncol = length(unique(keys)), nrow = 0),
@@ -58,7 +57,7 @@ getOBO <- function(x) {
     }
     # Clean the data a bit
     if ("is_obsolete" %in% colnames(df)) {
-        df <- df[is.na(df[, "is_obsolete"]), ]
+        df <- df[is.na(df[, "is_obsolete"]), , drop = FALSE]
     }
     strs <- strsplit(df$is_a, " ! ")
     df$sets <- vapply(strs, "[", character(1L), i = 1)
@@ -68,22 +67,22 @@ getOBO <- function(x) {
     df$ref_code <- vapply(strs, "[", character(1L), i = 2)
     df$fuzzy <- 1
     colnames(df)[colnames(df) == "id"] <- "elements"
-    df <- df[!is.na(df$sets), ]
+    df <- df[!is.na(df$sets), , drop = FALSE]
     keep_columns <- setdiff(colnames(df), c("xref", "is_obsolete", "is_a"))
     df <- df[, keep_columns]
     tidySet.data.frame(df)
 }
 
 # Using data downloaded from
-# http://geneontology.org/gene-associations/goa_human_rna.gaf.gz on 20190711
+# https://geneontology.org/gene-associations/goa_human_rna.gaf.gz on 20190711
 # About the format:
-# http://geneontology.org/docs/go-annotation-file-gaf-format-2.1/
+# https://geneontology.org/docs/go-annotation-file-gaf-format-2.1/
 #' Read a GAF file
 #'
 #' Read a GO Annotation File (GAF) formatted file
 #'
 #' @references The format is defined [here](
-#' http://geneontology.org/docs/go-annotation-file-gaf-format-2.1/).
+#' https://geneontology.org/docs/go-annotation-file-gaf-format-2.1/).
 #' @param x A file in GAF format
 #' @return A TidySet object
 #' @export

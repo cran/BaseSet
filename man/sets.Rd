@@ -34,13 +34,13 @@ Given TidySet retrieve the sets or substitute them.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{TidySet}: Retrieve the sets information
+\item \code{sets(TidySet)}: Retrieve the sets information
 
-\item \code{TidySet}: Modify the sets information
+\item \code{sets(TidySet) <- value}: Modify the sets information
 
-\item \code{TidySet}: Return the number of sets
+\item \code{nSets(TidySet)}: Return the number of sets
+
 }}
-
 \examples{
 TS <- tidySet(list(A = letters[1:5], B = letters[2:10]))
 sets(TS)
@@ -51,7 +51,7 @@ nSets(TS)
 nSets(TS2)
 }
 \seealso{
-\code{\link{nSets}}
+\code{\link[=nSets]{nSets()}}
 
 Other slots: 
 \code{\link{elements}()},

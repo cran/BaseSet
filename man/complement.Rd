@@ -9,8 +9,8 @@ complement(.data, ...)
 \arguments{
 \item{.data}{The TidySet object}
 
-\item{...}{Other arguments passed to either \code{\link{complement_set}} or
-\code{\link{complement_element}}.}
+\item{...}{Other arguments passed to either \code{\link[=complement_set]{complement_set()}} or
+\code{\link[=complement_element]{complement_element()}}.}
 }
 \value{
 A TidySet object
@@ -44,7 +44,7 @@ TS \%>\%
     complement("A", FUN = function(x){abs(x - 0.2)}, keep = FALSE)
 }
 \seealso{
-\code{\link{activate}}
+\code{\link[=activate]{activate()}}
 
 Other complements: 
 \code{\link{complement_element}()},

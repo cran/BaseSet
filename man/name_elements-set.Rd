@@ -28,7 +28,7 @@ TS
 name_elements(TS) <- letters[1:6]
 }
 \seealso{
-\code{\link{rename_elements}}
+\code{\link[=rename_elements]{rename_elements()}}
 
 Other names: 
 \code{\link{name_elements}()},

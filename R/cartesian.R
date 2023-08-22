@@ -37,7 +37,7 @@ cartesian.TidySet <- function(object, set1, set2, name = NULL, keep = TRUE,
     if (any(!c(set1, set2) %in% name_sets(object))) {
         stop("Sets must be on the object", call. = FALSE)
     }
-    if (length(set1) > 1 | length(set2) > 1) {
+    if (length(set1) > 1 || length(set2) > 1) {
         stop("Sets must be of length 1", call. = FALSE)
     }
 
@@ -63,12 +63,12 @@ cartesian.TidySet <- function(object, set1, set2, name = NULL, keep = TRUE,
     object <- add_sets(object, name)
     object <- add_sets(object, new_names)
     relation <- data.frame(
-        elements = unlist(new_sets),
+        elements = unlist(new_sets, FALSE, FALSE),
         sets = rep(new_names, lengths(new_sets))
     )
     object <- add_relation(object, relation)
     relations <- relations(object)
-    cart <- relations[relations$sets %in% new_names, ]
+    cart <- relations[relations$sets %in% new_names, , drop = FALSE]
     cart$sets <- name
 
     if (keep_relations) {
@@ -76,7 +76,5 @@ cartesian.TidySet <- function(object, set1, set2, name = NULL, keep = TRUE,
     } else {
         relations(object) <- cart
     }
-    object <- droplevels(object)
-    validObject(object)
-    object
+    droplevels(object)
 }

@@ -28,7 +28,7 @@ TS
 name_sets(TS) <- LETTERS[1:2]
 }
 \seealso{
-\code{\link{rename_set}}
+\code{\link[=rename_set]{rename_set()}}
 
 Other names: 
 \code{\link{name_elements<-}()},

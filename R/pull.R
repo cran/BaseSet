@@ -16,7 +16,7 @@ dplyr::pull
 #' @param ... Currently not used.
 #' @return A TidySet object
 #' @export
-#' @seealso dplyr \code{\link[dplyr]{pull}} and \code{\link{activate}}
+#' @seealso [dplyr::pull()] and [activate()]
 #' @family methods
 #' @examples
 #' relations <- data.frame(

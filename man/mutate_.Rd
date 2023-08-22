@@ -42,7 +42,7 @@ b <- mutate_relation(a, Type = sample(c("PPI", "PF", "MP"), 12,
 ))
 }
 \seealso{
-\code{\link[dplyr]{mutate}} and \code{\link{activate}}
+\code{\link[dplyr:mutate]{dplyr::mutate()}} and \code{\link[=activate]{activate()}}
 
 Other methods: 
 \code{\link{TidySet-class}},

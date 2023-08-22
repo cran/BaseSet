@@ -47,7 +47,7 @@ elements(b)
 select_set(a, sets)
 }
 \seealso{
-dplyr \code{\link[dplyr]{select}} and \code{\link{activate}}
+\code{\link[dplyr:select]{dplyr::select()}} and \code{\link[=activate]{activate()}}
 
 Other methods: 
 \code{\link{TidySet-class}},

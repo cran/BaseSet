@@ -1,10 +1,56 @@
 #' @include AllClasses.R AllGenerics.R
 NULL
 
+#' Length of the TidySet
+#'
+#' Returns the number of sets in the object.
+#' @param x A TidySet object.
+#'
+#' No replacement function is available, either delete sets or add them.
+#' @return A numeric value.
+#' @seealso [dim()], [ncol()] and [nrow()].
+#' Also look at [lengths()] for the number of relations of sets.
+#' @export
+#' @examples
+#' TS <- tidySet(list(A = letters[1:5], B = letters[6]))
+#' length(TS)
+length.TidySet <- function(x) {
+    nSets(x)
+}
+
+#' Lengths of the TidySet
+#'
+#' Returns the number of relations of each set in the object.
+#' @param x A TidySet object.
+#' @param use.names A logical value whether to inherit names or not.
+#'
+#' @return A vector with the number of different relations for each set.
+#' @seealso [length()], Use [set_size()] if you are using fuzzy sets.
+#' @export
+#' @examples
+#' TS <- tidySet(list(A = letters[1:5], B = letters[6]))
+#' lengths(TS)
+setMethod("lengths", "TidySet",
+          function(x, use.names = TRUE) {
+              r <- relations(x)
+              sets_elements <- paste0(r$sets, r$elements)
+              names(sets_elements) <- r$sets
+              d <- duplicated(sets_elements)
+              td <- table(names(sets_elements)[!d])
+
+              if (!use.names) {
+                  names(td) <- NULL
+              }
+
+              # To convert the table to a named integer
+              c(td)
+          }
+)
 #' Probability of a vector of probabilities
 #'
 #' Calculates the probability that all probabilities happened simultaneously.
-#' `independent_probabilities` just multiply the probabilities of the index passed.
+#' `independent_probabilities()` just multiply the probabilities of the index
+#' passed.
 #' @param p Numeric vector of probabilities.
 #' @param i Numeric integer index of the complementary probability.
 #' @return A numeric value of the probability.
@@ -133,7 +179,7 @@ setMethod("set_size",
         }
 
         rel <- relations(object)
-        rel <- rel[rel$sets %in% names_sets, ]
+        rel <- rel[rel$sets %in% names_sets, , drop = FALSE]
         missing <- names_sets[!names_sets %in% rel$sets]
         rel <- rel[, c("fuzzy", "elements", "sets")]
 
@@ -156,8 +202,8 @@ setMethod("set_size",
             fuzzy_values <- split(rel$fuzzy, rel$sets)
             sizes <- lapply(fuzzy_values, length_set)
             sets <- rep(names(fuzzy_values), lengths(sizes))
-            lengths_set <- unlist(lapply(sizes, names), use.names = FALSE)
-            probability_length <- unlist(sizes, use.names = FALSE)
+            lengths_set <- unlist(lapply(sizes, names), FALSE, FALSE)
+            probability_length <- unlist(sizes, FALSE, FALSE)
         } else {
             sets <- names_sets
             lengths_set <- table(rel$sets)[names_sets]
@@ -183,7 +229,7 @@ setMethod("set_size",
         if (is.null(sets)) {
             out
         } else {
-            out[sets %in% sets, ]
+            out[sets %in% sets, , drop = FALSE]
         }
     }
 )
@@ -218,7 +264,7 @@ setMethod("element_size",
             names_elements <- elements
         }
 
-        rel <- rel[rel$elements %in% names_elements, ]
+        rel <- rel[rel$elements %in% names_elements, , drop = FALSE]
         rel <- rel[, c("fuzzy", "elements", "sets")]
         missing <- names_elements[!names_elements %in% rel$elements]
 
@@ -239,8 +285,8 @@ setMethod("element_size",
             fuzzy_values <- split(rel$fuzzy, rel$elements)
             sizes <- lapply(fuzzy_values, length_set)
             elements <- rep(names(fuzzy_values), lengths(sizes))
-            lengths_set <- unlist(lapply(sizes, names), use.names = FALSE)
-            probability_length <- unlist(sizes, use.names = FALSE)
+            lengths_set <- unlist(lapply(sizes, names), FALSE, FALSE)
+            probability_length <- unlist(sizes, FALSE, FALSE)
         } else {
             elements <- names_elements
             lengths_set <- table(rel$elements)[names_elements]
@@ -268,7 +314,7 @@ setMethod("element_size",
         if (is.null(elements)) {
             out
         } else {
-            out[elements %in% elements, ]
+            out[elements %in% elements, , drop = FALSE]
         }
     }
 )

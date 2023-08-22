@@ -32,23 +32,23 @@ elements and sets.
 }
 \description{
 Given TidySet retrieve the relations or substitute them.
-\code{\link{TidySet}} object
+\code{\link[=TidySet]{TidySet()}} object
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{TidySet}: Retrieve the relations
+\item \code{relations(TidySet)}: Retrieve the relations
 
-\item \code{TidySet}: Modify the relations
+\item \code{relations(TidySet) <- value}: Modify the relations
 
-\item \code{TidySet}: Return the number of unique relations
+\item \code{nRelations(TidySet)}: Return the number of unique relations
+
 }}
-
 \examples{
 TS <- tidySet(list(A = letters[1:2], B = letters[5:7]))
 relations(TS)
 }
 \seealso{
-\code{\link{nRelations}}
+\code{\link[=nRelations]{nRelations()}}
 
 Other slots: 
 \code{\link{elements}()},

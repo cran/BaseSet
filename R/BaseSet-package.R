@@ -1,3 +1,5 @@
+#' @docType package
+#' @keywords internal
 #' @details
 #' It provides a class [`TidySet`] with methods to do operations with sets.
 #' @examples
@@ -6,3 +8,7 @@
 #' cardinality(TS)
 #' intersection(TS, c("A", "B"))
 "_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL

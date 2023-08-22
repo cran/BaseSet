@@ -31,7 +31,7 @@ elements(a) <- cbind(elements(a),
 group_by(a, elements)
 }
 \seealso{
-dplyr \code{\link[dplyr]{group_by}} and \code{\link{activate}}
+\code{\link[dplyr:group_by]{dplyr::group_by()}} and \code{\link[=activate]{activate()}}
 
 Other methods: 
 \code{\link{TidySet-class}},

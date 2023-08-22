@@ -49,7 +49,7 @@ filter(TS, sets == "b", type == "lncRNA")
 filter_set(TS, sets == "b")
 }
 \seealso{
-dplyr \code{\link[dplyr]{filter}} and \code{\link{activate}}
+\code{\link[dplyr:filter]{dplyr::filter()}} and \code{\link[=activate]{activate()}}
 
 Other methods: 
 \code{\link{TidySet-class}},

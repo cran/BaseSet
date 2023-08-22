@@ -21,8 +21,8 @@ gene_data <- data.frame(
 
 tidy_set <- add_column(tidy_set, "elements", gene_data)
 set_data <- data.frame(
-    Group     = c(      100,        200 ),
-    Colum     = c(     "abc",      "def")
+    Group     = c( 100 ,  200 ),
+    Column     = c("abc", "def")
 )
 tidy_set <- add_column(tidy_set, "sets", set_data)
 tidy_set
@@ -32,11 +32,30 @@ relations(tidy_set)
 elements(tidy_set)
 sets(tidy_set)
 
+## -----------------------------------------------------------------------------
+gene_data <- data.frame(
+    stat2     = c( 4,   4,   3,   5 ),
+    info2     = c("a", "b", "c", "d")
+)
+
+tidy_set$info1 <- NULL
+tidy_set[, "elements", c("stat2", "info2")] <- gene_data
+tidy_set[, "sets", "Group"] <- c("low", "high")
+tidy_set
+
+## ----tidyset_data.frame-------------------------------------------------------
+relations <- data.frame(elements = c("a", "b", "c", "d", "e", "f"), 
+                        sets = c("A", "A", "A", "A", "A", "B"), 
+                        fuzzy = c(1, 1, 1, 1, 1, 1))
+TS <- tidySet(relations)
+TS
+
 ## ----tidySet_matrix-----------------------------------------------------------
-m <- matrix(c(0, 0, 1, 1, 1, 1, 0, 1, 0), ncol = 3, nrow =3,  
+m <- matrix(c(0, 0, 1, 1, 1, 1, 0, 1, 0), ncol = 3, nrow = 3,  
                dimnames = list(letters[1:3], LETTERS[1:3]))
 m
 tidy_set <- tidySet(m)
+tidy_set
 
 ## ----as.list------------------------------------------------------------------
 as.list(tidy_set)
@@ -71,7 +90,7 @@ nSets(tidy_set)
 nRelations(tidy_set)
 
 ## ----set_size-----------------------------------------------------------------
-set_size(tidy_set, "A")
+set_size(tidy_set)
 
 ## ----element_size-------------------------------------------------------------
 element_size(tidy_set)
@@ -111,6 +130,12 @@ set_modified %>%
 ## ----group2-------------------------------------------------------------------
 set_modified %>% 
   group("pathway1", elements %in% c("Gene1", "Gene2"))
+
+## ----group_by-----------------------------------------------------------------
+set_modified %>% 
+    deactivate() %>% 
+    group_by(Pathway, sets) %>%  
+    count()
 
 ## ----moving-------------------------------------------------------------------
 elements(set_modified)

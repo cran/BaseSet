@@ -43,13 +43,17 @@ A \code{TidySet} object.
 }
 \description{
 Elements in a set not present in the other set. Equivalent to
-\code{\link{setdiff}}.
+\code{\link[=setdiff]{setdiff()}}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{object = TidySet,set_in = characterORfactor,not_in = characterORfactor}: Elements present in sets but not in other sets
-}}
+\item \code{subtract(
+  object = TidySet,
+  set_in = characterORfactor,
+  not_in = characterORfactor
+)}: Elements present in sets but not in other sets
 
+}}
 \examples{
 relations <- data.frame(
     sets = c("A", "A", "B", "B", "C", "C"),
@@ -61,7 +65,7 @@ subtract(TS, "A", "B")
 subtract(TS, "A", "B", keep = FALSE)
 }
 \seealso{
-\code{\link{setdiff}}
+\code{\link[=setdiff]{setdiff()}}
 
 Other complements: 
 \code{\link{complement_element}()},

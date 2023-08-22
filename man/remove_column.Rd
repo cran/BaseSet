@@ -24,9 +24,9 @@ Removes column from a slot of the TidySet object.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{object = TidySet,slot = character,column_names = character}: Remove columns to any slot
-}}
+\item \code{remove_column(object = TidySet, slot = character, column_names = character)}: Remove columns to any slot
 
+}}
 \examples{
 x <- data.frame(sets = c(rep("A", 5), rep("B", 5)),
                 elements = c(letters[1:5], letters[3:7]),
@@ -36,7 +36,7 @@ TS
 remove_column(TS, "relations", "extra")
 }
 \seealso{
-\code{\link{rename_set}}
+\code{\link[=rename_set]{rename_set()}}
 
 Other column: 
 \code{\link{add_column}()}

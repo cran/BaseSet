@@ -6,6 +6,7 @@
 \alias{tidySet.list}
 \alias{tidySet.matrix}
 \alias{tidySet.Go3AnnDbBimap}
+\alias{tidySet.TidySet}
 \title{Create a TidySet object}
 \usage{
 tidySet(relations)
@@ -17,6 +18,8 @@ tidySet(relations)
 \method{tidySet}{matrix}(relations)
 
 \method{tidySet}{Go3AnnDbBimap}(relations)
+
+\method{tidySet}{TidySet}(relations)
 }
 \arguments{
 \item{relations}{An object to be coerced to a TidySet.}
@@ -34,15 +37,17 @@ Elements or sets without any relation are not shown when printed.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{data.frame}: Given the relations in a data.frame
+\item \code{tidySet(data.frame)}: Given the relations in a data.frame
 
-\item \code{list}: Convert to a TidySet from a list
+\item \code{tidySet(list)}: Convert to a TidySet from a list.
 
-\item \code{matrix}: Convert an incidence matrix into a TidySet
+\item \code{tidySet(matrix)}: Convert an incidence matrix into a TidySet
 
-\item \code{Go3AnnDbBimap}: Convert Go3AnnDbBimap into a TidySet object.
+\item \code{tidySet(Go3AnnDbBimap)}: Convert Go3AnnDbBimap into a TidySet object.
+
+\item \code{tidySet(TidySet)}: Convert TidySet into a TidySet object.
+
 }}
-
 \examples{
 relations <- data.frame(
     sets = c(rep("a", 5), "b"),
@@ -73,5 +78,5 @@ M <- matrix(c(1, 0.5, 1, 0), ncol = 2,
 tidySet(M)
 }
 \seealso{
-\code{\link{TidySet-class}}
+\code{\link{TidySet}}
 }

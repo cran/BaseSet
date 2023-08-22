@@ -9,8 +9,8 @@ library("dplyr")
 ## ----fuzzy--------------------------------------------------------------------
 set.seed(4567) # To be able to have exact replicates
 relations <- data.frame(sets = c(rep("A", 5), "B", "C"),
-                          elements = c(letters[seq_len(6)], letters[6]),
-                          fuzzy = runif(7))
+                        elements = c(letters[seq_len(6)], letters[6]),
+                        fuzzy = runif(7))
 fuzzy_set <- tidySet(relations)
 
 ## ----union--------------------------------------------------------------------
@@ -45,46 +45,46 @@ element_size(fuzzy_set)
 
 ## ----cells_0------------------------------------------------------------------
 sc_classification <- data.frame(
-  elements = c("D2ex_1", "D2ex_10", "D2ex_11", "D2ex_12", "D2ex_13", "D2ex_14", 
-               "D2ex_15", "D2ex_16", "D2ex_17", "D2ex_18", "D2ex_1", "D2ex_10", 
-               "D2ex_11", "D2ex_12", "D2ex_13", "D2ex_14", "D2ex_15", "D2ex_16",
-               "D2ex_17", "D2ex_18", "D2ex_1", "D2ex_10", "D2ex_11", "D2ex_12", 
-               "D2ex_13", "D2ex_14", "D2ex_15", "D2ex_16", "D2ex_17", "D2ex_18", 
-               "D2ex_1", "D2ex_10", "D2ex_11", "D2ex_12", "D2ex_13", "D2ex_14", 
-               "D2ex_15", "D2ex_16", "D2ex_17", "D2ex_18"), 
-  sets = c("alpha", "alpha", "alpha", "alpha", "alpha", "alpha", "alpha", 
-           "alpha", "alpha", "alpha", "endothel", "endothel", "endothel", 
-           "endothel", "endothel", "endothel", "endothel", "endothel", 
-           "endothel", "endothel", "delta", "delta", "delta", "delta", "delta", 
-           "delta", "delta", "delta", "delta", "delta", "beta", "beta", "beta", 
-           "beta", "beta", "beta", "beta", "beta", "beta", "beta"), 
-  fuzzy = c(0.18, 0.169, 0.149, 0.192, 0.154, 0.161, 0.169, 0.197, 0.162, 0.201, 
-            0.215, 0.202, 0.17, 0.227, 0.196, 0.215, 0.161, 0.195, 0.178, 
-            0.23, 0.184, 0.172, 0.153, 0.191, 0.156, 0.167, 0.165, 0.184, 
-            0.162, 0.194, 0.197, 0.183, 0.151, 0.208, 0.16, 0.169, 0.169, 
-            0.2, 0.154, 0.208), stringsAsFactors = FALSE)
+    elements = c("D2ex_1", "D2ex_10", "D2ex_11", "D2ex_12", "D2ex_13", "D2ex_14", 
+                 "D2ex_15", "D2ex_16", "D2ex_17", "D2ex_18", "D2ex_1", "D2ex_10", 
+                 "D2ex_11", "D2ex_12", "D2ex_13", "D2ex_14", "D2ex_15", "D2ex_16",
+                 "D2ex_17", "D2ex_18", "D2ex_1", "D2ex_10", "D2ex_11", "D2ex_12", 
+                 "D2ex_13", "D2ex_14", "D2ex_15", "D2ex_16", "D2ex_17", "D2ex_18", 
+                 "D2ex_1", "D2ex_10", "D2ex_11", "D2ex_12", "D2ex_13", "D2ex_14", 
+                 "D2ex_15", "D2ex_16", "D2ex_17", "D2ex_18"), 
+    sets = c("alpha", "alpha", "alpha", "alpha", "alpha", "alpha", "alpha", 
+             "alpha", "alpha", "alpha", "endothel", "endothel", "endothel", 
+             "endothel", "endothel", "endothel", "endothel", "endothel", 
+             "endothel", "endothel", "delta", "delta", "delta", "delta", "delta", 
+             "delta", "delta", "delta", "delta", "delta", "beta", "beta", "beta", 
+             "beta", "beta", "beta", "beta", "beta", "beta", "beta"), 
+    fuzzy = c(0.18, 0.169, 0.149, 0.192, 0.154, 0.161, 0.169, 0.197, 0.162, 0.201, 
+              0.215, 0.202, 0.17, 0.227, 0.196, 0.215, 0.161, 0.195, 0.178, 
+              0.23, 0.184, 0.172, 0.153, 0.191, 0.156, 0.167, 0.165, 0.184, 
+              0.162, 0.194, 0.197, 0.183, 0.151, 0.208, 0.16, 0.169, 0.169, 
+              0.2, 0.154, 0.208), stringsAsFactors = FALSE)
 head(sc_classification)
 
 ## ----cells_classification-----------------------------------------------------
 sc_classification %>% 
-  group_by(elements) %>% 
-  filter(fuzzy == max(fuzzy)) %>% 
-  group_by(sets) %>% 
-  count()
+    group_by(elements) %>% 
+    filter(fuzzy == max(fuzzy)) %>% 
+    group_by(sets) %>% 
+    count()
 
 ## ----cells_subset-------------------------------------------------------------
 scTS <- tidySet(sc_classification) # Conversion of format
 sample_cells <- scTS %>% 
-  element_size() %>% 
-  group_by(elements) %>% 
-  filter(probability == max(probability))
+    element_size() %>% 
+    group_by(elements) %>% 
+    filter(probability == max(probability))
 sample_cells
 
 ## ----celltypes----------------------------------------------------------------
 scTS %>% 
-  set_size() %>% 
-  group_by(sets) %>% 
-  filter(probability == max(probability))
+    set_size() %>% 
+    group_by(sets) %>% 
+    filter(probability == max(probability))
 
 ## ----sessionInfo, echo=FALSE--------------------------------------------------
 sessionInfo()

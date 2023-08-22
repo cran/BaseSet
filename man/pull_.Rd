@@ -52,7 +52,7 @@ pull_element(a, type)
 pull_set(a, sets)
 }
 \seealso{
-dplyr \code{\link[dplyr]{pull}} and \code{\link{activate}}
+\code{\link[dplyr:pull]{dplyr::pull()}} and \code{\link[=activate]{activate()}}
 
 Other methods: 
 \code{\link{TidySet-class}},

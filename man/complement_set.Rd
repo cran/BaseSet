@@ -48,9 +48,9 @@ Return the complement for a set
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{object = TidySet,sets = characterORfactor}: Complement of the sets.
-}}
+\item \code{complement_set(object = TidySet, sets = characterORfactor)}: Complement of the sets.
 
+}}
 \examples{
 relations <- data.frame(
     sets = c("A", "A", "B", "B", "C", "C"),
@@ -61,7 +61,7 @@ TS <- tidySet(relations)
 complement_set(TS, "A")
 }
 \seealso{
-\code{\link{filter}}
+\code{\link[=filter]{filter()}}
 
 Other complements: 
 \code{\link{complement_element}()},

@@ -23,7 +23,7 @@ NULL
 #' )
 #' tidySet(relations2)
 #' @export
-#' @seealso \code{\link{TidySet-class}}
+#' @seealso [`TidySet`]
 tidySet <- function(relations) {
     UseMethod("tidySet")
 }
@@ -58,8 +58,8 @@ tidySet.data.frame <- function(relations) {
         relations <- cbind.data.frame(relations, fuzzy,
                                       stringsAsFactors = FALSE)
     } else if (!is.numeric(relations$fuzzy)) {
-        stop("Fuzzy column should be a numeric column with numbers between 0 and 1.",
-             call. = FALSE)
+        stop("Fuzzy column should be a numeric column with numbers ",
+             "between 0 and 1.", call. = FALSE)
     }
     # Just in case
     rownames(relations) <- seq_len(nrow(relations))
@@ -67,7 +67,7 @@ tidySet.data.frame <- function(relations) {
 }
 
 #' @export
-#' @describeIn tidySet Convert to a TidySet from a list
+#' @describeIn tidySet Convert to a TidySet from a list.
 #' @examples
 #' # A
 #' x <- list("A" = letters[1:5], "B" = LETTERS[3:7])
@@ -99,15 +99,15 @@ tidySet.list <- function(relations) {
     }
     if (all(char | fact)) {
         relations <- lapply(relations, unique)
-        elements <- unlist(relations, use.names = FALSE)
+        elements <- unlist(relations, FALSE, FALSE)
         fuzzy <- rep(1, length(elements))
     } else if (all(num)) {
-        elements <- unlist(lapply(relations, names), use.names = FALSE)
+        elements <- unlist(lapply(relations, names), FALSE, FALSE)
 
         if (is.null(elements)) {
             stop("The numeric vectors should be named", call. = FALSE)
         }
-        fuzzy <- unlist(relations, use.names = FALSE)
+        fuzzy <- unlist(relations, FALSE, FALSE)
     }
 
     sets_size <- lengths(relations)
@@ -195,4 +195,10 @@ tidySet.Go3AnnDbBimap <- function(relations) {
     # df3 <- merge(df2, unique(df[, c("sets", "Ontology")]))
     TS <- tidySet.data.frame(df)
     move_to(TS, "relations", "sets", "Ontology")
+}
+
+#' @describeIn tidySet Convert TidySet into a TidySet object.
+#' @export
+tidySet.TidySet <- function(relations) {
+    relations
 }
