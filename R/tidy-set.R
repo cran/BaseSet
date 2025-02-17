@@ -1,6 +1,8 @@
 #' @include AllClasses.R
 NULL
 
+# @importClassesFrom AnnotationDbi Go3AnnDbBimap
+
 #' Create a TidySet object
 #'
 #' These functions help to create a \code{TidySet} object from
@@ -67,6 +69,7 @@ tidySet.data.frame <- function(relations) {
 }
 
 #' @export
+#' @method tidySet list
 #' @describeIn tidySet Convert to a TidySet from a list.
 #' @examples
 #' # A
@@ -143,6 +146,7 @@ tidySet.list <- function(relations) {
 }
 
 #' @describeIn tidySet Convert an incidence matrix into a TidySet
+#' @method tidySet matrix
 #' @export
 #' @examples
 #' M <- matrix(c(1, 0.5, 1, 0), ncol = 2,
@@ -177,11 +181,12 @@ tidySet.matrix <- function(relations) {
 }
 
 #' @describeIn tidySet Convert Go3AnnDbBimap into a TidySet object.
+#' @method tidySet Go3AnnDbBimap
 #' @export
 tidySet.Go3AnnDbBimap <- function(relations) {
     # Prepare the data
-    df <- as.data.frame(relations)
-    colnames(df) <- c("elements", "sets", "Evidence", "Ontology")
+    relations <- as.data.frame(relations)
+    colnames(relations) <- c("elements", "sets", "Evidence", "Ontology")
 
     # # Transform each evidence code into its own column
     # e_s <- paste(df$elements, df$sets)
@@ -193,7 +198,7 @@ tidySet.Go3AnnDbBimap <- function(relations) {
     #
     # df2 <- cbind(tt2, nEvidence = rowSums(tt))
     # df3 <- merge(df2, unique(df[, c("sets", "Ontology")]))
-    TS <- tidySet.data.frame(df)
+    TS <- tidySet(relations)
     move_to(TS, "relations", "sets", "Ontology")
 }
 

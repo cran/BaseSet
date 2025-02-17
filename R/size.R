@@ -2,7 +2,7 @@
 #'
 #' Calculate the size of the elements or sets, using the fuzzy values as
 #' probabilities. First it must have active either sets or elements.
-#' @param object A TidySet object
+#' @param object A TidySet object.
 #' @param ... Character vector with the name of elements or sets you want to
 #' calculate the size of.
 #' @export
@@ -46,10 +46,9 @@ size.TidySet <- function(object, ...) {
         )
         warning(msg)
         return(object)
-    } else {
-        switch(a,
-            elements = element_size(object, ...),
-            sets = set_size(object, ...)
-        )
     }
+
+    switch(a,
+           elements = element_size(object, ...),
+           sets = set_size(object, ...))
 }

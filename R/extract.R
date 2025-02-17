@@ -6,7 +6,7 @@ NULL
 #' Operators acting on TidySet to extract or replace parts.
 #' They are designed to resemble the basic operators.
 #' @param x A TidySet object.
-#' @param name The data about the TidysSet object to extract.
+#' @param name The data about the TidySet object to extract.
 #' @param value The value to overwrite
 #' @param i Which rows do you want to keep? By default all.
 #' @param j Which slot do you want to extract? One of "sets", "elements" or
@@ -24,7 +24,7 @@ NULL
 #' TS[, "sets", "origin"] <- sample(c("random", "non-random"), 2, replace = TRUE)
 #' TS[, "sets", "type"] <- c("Fantastic", "Wonderful")
 #' # This produces a warning
-#  TS$description <- c("What", "can", "I", "say", "now", "?")
+#' # TS$description <- c("What", "can", "I", "say", "now", "?")
 #' # Better to be explicit:
 #' TS[, "relations", "description"] <- c("What", "can", "I", "say", "now", "?")
 #' relations(TS)
@@ -81,7 +81,6 @@ setMethod("$<-", "TidySet",
                                 fuzzy = 2,
                                 sets = 3,
                                 NA)
-
               if (is.na(p_named)) {
                   p_named <- in_slots(x, function(x, y){
                       y %in% colnames(x)},
@@ -93,6 +92,7 @@ setMethod("$<-", "TidySet",
                   pos <- 2
                   value <- rep(value, nRelations(x))
               }
+
               #  Not tested with a relation documented multiple times!
               if (length(p_named) > 1 && length(p_length) > 1) {
                   p_named <- intersect(p_named, p_length)
@@ -110,7 +110,16 @@ setMethod("$<-", "TidySet",
                               call. = FALSE)
                       pos <- sample(p_named, 1)
                   }
-              } else {
+              }
+
+              if (length(p_named) != 1 && length(p_length) == 1)  {
+                  pos <- p_length
+              }
+              if (length(p_length) != 1 && length(p_named) == 1)  {
+                  pos <- p_named
+              }
+
+              if ( length(p_named) == 1 && length(p_length) == 1) {
                   pos <- p_named
               }
 
@@ -131,10 +140,6 @@ setMethod("$<-", "TidySet",
 #' @export
 setMethod("[", "TidySet",
           function(x, i, j, k, ..., drop = TRUE) {
-              if (!missing(i) && is.character(i)) {
-                  stop("TidySet does not accept characters as `i` index for `[`.",
-                       "\nDid you meant to use [[ instead?", call. = FALSE)
-              }
               stopifnot(is.logical(drop))
               if (missing(j)) {
                   j <- "relations"
@@ -142,10 +147,25 @@ setMethod("[", "TidySet",
               if (length(j) > 1 || is.na(j)) {
                   stop("j only accepts: 'elements', 'sets' and ' relations'")
               }
+
+              # TODO allow characters that match with the j component!
+              if (!missing(i) && is.character(i) && j == "relations") {
+                  stop("TidySet does not accept characters as `i` index for relations.",
+                       "\nUse row positions instead.", call. = FALSE)
+              }
               j <- match.arg(j, c("elements", "sets", "relations"))
+
+              if (!missing(i) && is.character(i)) {
+                  method <- switch(j,
+                                   "elements" = name_elements,
+                                   "sets" = name_sets)
+                  i <- match(i, method(x))
+              }
               s <-  slot(x, j)
               if (missing(k)) {
-                  k <- seq_len(ncol(s))
+                  k <- colnames(s)
+              } else if (!any(k %in% colnames(s))) {
+                  stop("Some column are not present in ", sQuote(j), ".")
               }
 
               k <- keep_columns(j, k)
@@ -175,10 +195,30 @@ setMethod("[<-", "TidySet",
                   j <- "relations"
               }
               j <- match.arg(j, c("elements", "sets", "relations"))
+
+              if (!missing(i) && is.character(i) && j == "relations") {
+                  stop("TidySet does not accept characters as `i` index for relations.",
+                       "\nUse row positions instead.", call. = FALSE)
+              }
+
+              j <- match.arg(j, c("elements", "sets", "relations"))
               s <-  slot(x, j)
+
+              if (!missing(i) && is.character(i)) {
+                  method <- switch(j,
+                                   "elements" = name_elements,
+                                   "sets" = name_sets)
+                  iy <- match(i, method(x, FALSE))
+                  if (anyNA(iy)) {
+                      iy[is.na(iy)] <- nElements(x, FALSE) + seq_len(sum(is.na(iy)))
+                      s[iy, j] <- i
+                      i <- iy
+                  }
+              }
               if (missing(k)) {
                   k <- 1
               }
+
               if (length(k) == 1 && NCOL(value) > 1) {
                   if (missing(i)) {
                       i <- ""
@@ -187,7 +227,8 @@ setMethod("[<-", "TidySet",
                   stop("Assigning multiple columns to a single position!\nUse one of:\n",
                        "add_column(TS, '", j, "', value) or ",msg)
               }
-              s[i, k, ...] <- value
+
+              s[i, k] <- value
               slot(x, j) <- s
               validObject(x)
               x
@@ -208,7 +249,7 @@ setMethod("[[", "TidySet",
               }
               stopifnot(isTRUE(exact) || isFALSE(exact))
               if (missing(j)) {
-                  j <- seq_len(ncol(sets(x)))
+                  j <- colnames(sets(x))
               }
               j <- keep_columns("sets", j)
               ns <- nSets(x)
@@ -229,8 +270,8 @@ setMethod("[[", "TidySet",
               x[namsi, "sets", j, drop = TRUE]
           })
 
-#' @export
 #' @rdname extract-TidySet
+#' @export
 setMethod("[[<-", "TidySet",
           function(x, i, value) {
               if (missing(i)) {

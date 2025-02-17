@@ -4,10 +4,14 @@
 \alias{name_sets<-}
 \title{Rename sets}
 \usage{
-name_sets(object) <- value
+name_sets(object, all, ...) <- value
 }
 \arguments{
 \item{object}{A TidySet object.}
+
+\item{all}{A logical value whether it should return all sets present.}
+
+\item{...}{Other arguments passed to methods.}
 
 \item{value}{A character with the new names for the sets.}
 }
@@ -31,8 +35,8 @@ name_sets(TS) <- LETTERS[1:2]
 \code{\link[=rename_set]{rename_set()}}
 
 Other names: 
-\code{\link{name_elements<-}()},
 \code{\link{name_elements}()},
+\code{\link{name_elements<-}()},
 \code{\link{name_sets}()},
 \code{\link{rename_elements}()},
 \code{\link{rename_set}()}
@@ -44,14 +48,14 @@ Other methods:
 \code{\link{add_relation}()},
 \code{\link{arrange.TidySet}()},
 \code{\link{cartesian}()},
+\code{\link{complement}()},
 \code{\link{complement_element}()},
 \code{\link{complement_set}()},
-\code{\link{complement}()},
 \code{\link{element_size}()},
 \code{\link{elements}()},
 \code{\link{filter.TidySet}()},
-\code{\link{group_by.TidySet}()},
 \code{\link{group}()},
+\code{\link{group_by.TidySet}()},
 \code{\link{incidence}()},
 \code{\link{intersection}()},
 \code{\link{is.fuzzy}()},

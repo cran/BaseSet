@@ -4,10 +4,14 @@
 \alias{name_elements<-}
 \title{Rename elements}
 \usage{
-name_elements(object) <- value
+name_elements(object, all, ...) <- value
 }
 \arguments{
 \item{object}{A TidySet object.}
+
+\item{all}{A logical value whether to return all elements or just those present.}
+
+\item{...}{Other arguments passed to methods.}
 
 \item{value}{A character with the new names for the elements.}
 }
@@ -32,8 +36,8 @@ name_elements(TS) <- letters[1:6]
 
 Other names: 
 \code{\link{name_elements}()},
-\code{\link{name_sets<-}()},
 \code{\link{name_sets}()},
+\code{\link{name_sets<-}()},
 \code{\link{rename_elements}()},
 \code{\link{rename_set}()}
 
@@ -44,14 +48,14 @@ Other methods:
 \code{\link{add_relation}()},
 \code{\link{arrange.TidySet}()},
 \code{\link{cartesian}()},
+\code{\link{complement}()},
 \code{\link{complement_element}()},
 \code{\link{complement_set}()},
-\code{\link{complement}()},
 \code{\link{element_size}()},
 \code{\link{elements}()},
 \code{\link{filter.TidySet}()},
-\code{\link{group_by.TidySet}()},
 \code{\link{group}()},
+\code{\link{group_by.TidySet}()},
 \code{\link{incidence}()},
 \code{\link{intersection}()},
 \code{\link{is.fuzzy}()},
@@ -61,8 +65,8 @@ Other methods:
 \code{\link{nElements}()},
 \code{\link{nRelations}()},
 \code{\link{nSets}()},
-\code{\link{name_sets<-}()},
 \code{\link{name_sets}()},
+\code{\link{name_sets<-}()},
 \code{\link{power_set}()},
 \code{\link{pull.TidySet}()},
 \code{\link{relations}()},

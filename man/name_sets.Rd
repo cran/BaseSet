@@ -2,18 +2,28 @@
 % Please edit documentation in R/AllGenerics.R, R/names.R
 \name{name_sets}
 \alias{name_sets}
-\alias{name_sets,TidySet-method}
-\alias{name_sets<-,TidySet,characterORfactor-method}
+\alias{name_sets,TidySet,logical-method}
+\alias{name_sets,TidySet,missing-method}
+\alias{name_sets<-,TidySet,logical,characterORfactor-method}
+\alias{name_sets<-,TidySet,missing,characterORfactor-method}
 \title{Name sets}
 \usage{
-name_sets(object)
+name_sets(object, all, ...)
 
-\S4method{name_sets}{TidySet}(object)
+\S4method{name_sets}{TidySet,logical}(object, all = TRUE)
 
-\S4method{name_sets}{TidySet,characterORfactor}(object) <- value
+\S4method{name_sets}{TidySet,missing}(object, all)
+
+\S4method{name_sets}{TidySet,logical,characterORfactor}(object, all) <- value
+
+\S4method{name_sets}{TidySet,missing,characterORfactor}(object, all) <- value
 }
 \arguments{
 \item{object}{A TidySet object.}
+
+\item{all}{A logical value if all sets should be reported or only those present.}
+
+\item{...}{Other arguments passed to methods.}
 
 \item{value}{A character with the new names for the sets.}
 }
@@ -25,9 +35,13 @@ Retrieve the name of the sets.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{name_sets(TidySet)}: Name sets
+\item \code{name_sets(object = TidySet, all = logical)}: Name sets
 
-\item \code{name_sets(object = TidySet) <- value}: Rename sets
+\item \code{name_sets(object = TidySet, all = missing)}: Name sets
+
+\item \code{name_sets(object = TidySet, all = logical) <- value}: Rename sets
+
+\item \code{name_sets(object = TidySet, all = missing) <- value}: Rename sets
 
 }}
 \examples{
@@ -41,8 +55,8 @@ name_sets(TS)
 }
 \seealso{
 Other names: 
-\code{\link{name_elements<-}()},
 \code{\link{name_elements}()},
+\code{\link{name_elements<-}()},
 \code{\link{name_sets<-}()},
 \code{\link{rename_elements}()},
 \code{\link{rename_set}()}
@@ -54,14 +68,14 @@ Other methods:
 \code{\link{add_relation}()},
 \code{\link{arrange.TidySet}()},
 \code{\link{cartesian}()},
+\code{\link{complement}()},
 \code{\link{complement_element}()},
 \code{\link{complement_set}()},
-\code{\link{complement}()},
 \code{\link{element_size}()},
 \code{\link{elements}()},
 \code{\link{filter.TidySet}()},
-\code{\link{group_by.TidySet}()},
 \code{\link{group}()},
+\code{\link{group_by.TidySet}()},
 \code{\link{incidence}()},
 \code{\link{intersection}()},
 \code{\link{is.fuzzy}()},

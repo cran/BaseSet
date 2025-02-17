@@ -1,5 +1,3 @@
-context("test-name")
-
 test_that("name_sets works", {
     relations <- data.frame(
         sets = c(rep("a", 5), "b"),
@@ -57,4 +55,20 @@ test_that("name_elements<- works", {
     expect_error(name_elements(b) <- rep("A2", nElements(b)),
                  "Duplicated elements")
     expect_error(name_elements(b) <- "A2", "Less names")
+})
+
+
+test_that("names and dimnames work", {
+    relations <- data.frame(
+        sets = c(rep("a", 5), "b"),
+        elements = letters[seq_len(6)],
+        fuzzy = runif(6)
+    )
+    a <- tidySet(relations = relations)
+    expect_length(names(a), 3L)
+    expect_equal(names(a), c("sets", "elements", "fuzzy"))
+    expect_length(dimnames(a), 3L)
+    expect_equal(names(activate(a, "relations")), c("sets", "elements", "fuzzy"))
+    expect_equal(names(activate(a, "sets")), c("sets"))
+    expect_equal(names(activate(a, "elements")), c("elements"))
 })

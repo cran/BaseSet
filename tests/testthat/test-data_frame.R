@@ -1,5 +1,3 @@
-context("test-data_frame")
-
 test_that("as.data.frame works", {
     relations <- data.frame(
         sets = c(rep("a", 5), "b", rep("a2", 5), "b2"),
@@ -8,7 +6,7 @@ test_that("as.data.frame works", {
     )
     a <- tidySet(relations)
     b <- as.data.frame(a)
-    expect_is(b, "data.frame")
+    expect_s3_class(b, "data.frame")
 })
 
 test_that("as.data.frame adds the fuzzy column", {
@@ -18,6 +16,6 @@ test_that("as.data.frame adds the fuzzy column", {
     )
     a <- tidySet(relations)
     b <- as.data.frame(a)
-    expect_is(b, "data.frame")
+    expect_s3_class(b, "data.frame")
     expect_setequal(colnames(b), c("sets", "elements", "fuzzy"))
 })
