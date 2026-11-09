@@ -1,3 +1,12 @@
+# BaseSet 1.0.1
+
+* Fixed issue with `getGAF()` when all optional columns are present (#73). 
+* Update documentation to use the latest `roxygen2` with anchored links.
+* Use styler.
+* Replaced `%>%` for the base `pipe` `|>`.
+* Tweaked vignettes to prevent warnings from dplyr and ggplot2.
+* Tweaked tests to avoid Note from CRAN.
+
 # BaseSet 1.0.0
 
 * Now it is possible to list sets and elements that are not present in the relations but might be on the object via its factors: `name_sets()`, `name_elements()`, `nElements()` and `nSets()` gain a `all` argument.

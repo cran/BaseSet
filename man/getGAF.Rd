@@ -7,10 +7,10 @@
 getGAF(x)
 }
 \arguments{
-\item{x}{A file in GAF format}
+\item{x}{A file in GAF format.}
 }
 \value{
-A TidySet object
+A TidySet object.
 }
 \description{
 Read a GO Annotation File (GAF) formatted file
@@ -27,8 +27,8 @@ head(gs)
 The format is defined \href{https://geneontology.org/docs/go-annotation-file-gaf-format-2.1/}{here}.
 }
 \seealso{
-Other IO functions: 
-\code{\link{getGMT}()},
-\code{\link{getOBO}()}
+Other IO functions:
+\code{\link[=getGMT]{getGMT()}},
+\code{\link[=getOBO]{getOBO()}}
 }
 \concept{IO functions}

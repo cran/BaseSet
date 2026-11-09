@@ -1,28 +1,30 @@
 ## ----setup, message=FALSE, warning=FALSE, include=FALSE-----------------------
 knitr::opts_knit$set(root.dir = ".")
-knitr::opts_chunk$set(collapse = TRUE, 
-                      warning = TRUE,
-                      comment = "#>")
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  warning = TRUE,
+  comment = "#>"
+)
 
 ## ----from_list, message=FALSE-------------------------------------------------
 library("BaseSet")
 gene_lists <- list(
-    geneset1 = c("A", "B"),
-    geneset2 = c("B", "C", "D")
+  geneset1 = c("A", "B"),
+  geneset2 = c("B", "C", "D")
 )
 tidy_set <- tidySet(gene_lists)
 tidy_set
 
 ## ----metadata, message=FALSE--------------------------------------------------
 gene_data <- data.frame(
-    stat1     = c( 1,   2,   3,   4 ),
-    info1     = c("a", "b", "c", "d")
+  stat1     = c(1, 2, 3, 4),
+  info1     = c("a", "b", "c", "d")
 )
 
 tidy_set <- add_column(tidy_set, "elements", gene_data)
 set_data <- data.frame(
-    Group     = c( 100 ,  200 ),
-    Column     = c("abc", "def")
+  Group = c(100, 200),
+  Column = c("abc", "def")
 )
 tidy_set <- add_column(tidy_set, "sets", set_data)
 tidy_set
@@ -34,8 +36,8 @@ sets(tidy_set)
 
 ## -----------------------------------------------------------------------------
 gene_data <- data.frame(
-    stat2     = c( 4,   4,   3,   5 ),
-    info2     = c("a", "b", "c", "d")
+  stat2     = c(4, 4, 3, 5),
+  info2     = c("a", "b", "c", "d")
 )
 
 tidy_set$info1 <- NULL
@@ -44,15 +46,19 @@ tidy_set[, "sets", "Group"] <- c("low", "high")
 tidy_set
 
 ## ----tidyset_data.frame-------------------------------------------------------
-relations <- data.frame(elements = c("a", "b", "c", "d", "e", "f"), 
-                        sets = c("A", "A", "A", "A", "A", "B"), 
-                        fuzzy = c(1, 1, 1, 1, 1, 1))
+relations <- data.frame(
+  elements = c("a", "b", "c", "d", "e", "f"),
+  sets = c("A", "A", "A", "A", "A", "B"),
+  fuzzy = c(1, 1, 1, 1, 1, 1)
+)
 TS <- tidySet(relations)
 TS
 
 ## ----tidySet_matrix-----------------------------------------------------------
-m <- matrix(c(0, 0, 1, 1, 1, 1, 0, 1, 0), ncol = 3, nrow = 3,  
-               dimnames = list(letters[1:3], LETTERS[1:3]))
+m <- matrix(c(0, 0, 1, 1, 1, 1, 0, 1, 0),
+  ncol = 3, nrow = 3,
+  dimnames = list(letters[1:3], LETTERS[1:3])
+)
 m
 tidy_set <- tidySet(m)
 tidy_set
@@ -105,37 +111,37 @@ name_sets(tidy_set)
 
 ## ----tidyverse----------------------------------------------------------------
 library("dplyr")
-m_TS <- tidy_set %>% 
-  activate("relations") %>% 
+m_TS <- tidy_set |>
+  activate("relations") |>
   mutate(Important = runif(nRelations(tidy_set)))
 m_TS
 
 ## ----deactivate---------------------------------------------------------------
-set_modified <- m_TS %>% 
-  activate("elements") %>% 
-  mutate(Pathway = if_else(elements %in% c("Gene1", "Gene2"), 
-                           "pathway1", 
-                           "pathway2"))
+set_modified <- m_TS |>
+  activate("elements") |>
+  mutate(Pathway = if_else(elements %in% c("Gene1", "Gene2"),
+    "pathway1",
+    "pathway2"
+  ))
 set_modified
-set_modified %>% 
-  deactivate() %>% # To apply a filter independently of where it is
+set_modified |>
+  deactivate() |> # To apply a filter independently of where it is
   filter(Pathway == "pathway1")
 
 ## ----group--------------------------------------------------------------------
 # A new group of those elements in pathway1 and with Important == 1
-set_modified %>% 
-  deactivate() %>% 
-  group(name = "new", Pathway == "pathway1")
+set_modified |>
+  deactivate() |>
+  BaseSet::group(name = "new", Pathway == "pathway1")
 
 ## ----group2-------------------------------------------------------------------
-set_modified %>% 
-  group("pathway1", elements %in% c("Gene1", "Gene2"))
+BaseSet::group(set_modified, "pathway1", elements %in% c("Gene1", "Gene2"))
 
 ## ----group_by-----------------------------------------------------------------
-set_modified %>% 
-    deactivate() %>% 
-    group_by(Pathway, sets) %>%  
-    count()
+set_modified |>
+  deactivate() |>
+  group_by(Pathway, sets) |>
+  count()
 
 ## ----moving-------------------------------------------------------------------
 elements(set_modified)
